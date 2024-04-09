@@ -567,6 +567,7 @@ int32_t ViperContext::handleSetParam(effect_param_t *pCmdParam, void *pReplyData
             uint16_t high = *(uint16_t *) (pCmdParam->data + vOffset + sizeof(uint16_t));
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_X_COEFFICIENTS called with low = %d, high = %d", low, high);
             viper.dynamicSystem.SetXCoeffs(low, high);
+            return 0;
         }
         case PARAM_SET_DYNAMIC_SYSTEM_Y_COEFFICIENTS: {
             if (pCmdParam->vsize != sizeof(uint16_t) * 2) {
@@ -577,6 +578,7 @@ int32_t ViperContext::handleSetParam(effect_param_t *pCmdParam, void *pReplyData
             uint16_t high = *(uint16_t *) (pCmdParam->data + vOffset + sizeof(uint16_t));
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_Y_COEFFICIENTS called with low = %d, high = %d", low, high);
             viper.dynamicSystem.SetYCoeffs(low, high);
+            return 0;
         }
         case PARAM_SET_DYNAMIC_SYSTEM_SIDE_GAIN: {
             if (pCmdParam->vsize != sizeof(uint8_t) * 2) {
@@ -587,6 +589,7 @@ int32_t ViperContext::handleSetParam(effect_param_t *pCmdParam, void *pReplyData
             uint8_t gainY = *(uint8_t *) (pCmdParam->data + vOffset + sizeof(uint8_t));
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_SIDE_GAIN called with gainX = %d, gainY = %d", gainX, gainY);
             viper.dynamicSystem.SetSideGain(static_cast<float>(gainX) / 100.0f, static_cast<float>(gainY) / 100.0f);
+            return 0;
         }
         case PARAM_SET_DYNAMIC_SYSTEM_STRENGTH: {
             if (pCmdParam->vsize != sizeof(uint16_t)) {
@@ -596,6 +599,7 @@ int32_t ViperContext::handleSetParam(effect_param_t *pCmdParam, void *pReplyData
             uint16_t strength = *(uint16_t *) (pCmdParam->data + vOffset);
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_STRENGTH called with strength = %d", strength);
             viper.dynamicSystem.SetBassGain(static_cast<float>(strength) / 100.0f);
+            return 0;
         }
         default: {
             VIPER_LOGE("handleSetParam: called with unknown key: %d", key);
