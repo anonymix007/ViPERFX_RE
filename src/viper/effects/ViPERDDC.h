@@ -10,7 +10,7 @@ public:
 
     void Process(float *samples, uint32_t size);
     void Reset();
-    void SetCoeffs(uint32_t newCoeffsSize, float *newCoeffs44100, float *newCoeffs48000);
+    void SetCoeffs(uint32_t newCoeffsSize, const float *newCoeffs44100, const float *newCoeffs48000);
     void SetEnable(bool enable);
     void SetSamplingRate(uint32_t samplingRate);
 
@@ -31,6 +31,7 @@ private:
     std::vector<float> y2R;
 
     void ReleaseResources();
+    bool isSamplingRateValid() const;
 };
 
 

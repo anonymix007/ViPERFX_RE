@@ -12,6 +12,7 @@ ViPERDDC::ViPERDDC() :
 void ViPERDDC::Process(float *samples, uint32_t size) {
     if (!this->setCoeffsOk || this->arrSize == 0) return;
     if (!this->enable) return;
+    if (!isSamplingRateValid()) return;
 
     std::vector<std::array<float, 5>> *coeffsArr;
 
@@ -23,10 +24,6 @@ void ViPERDDC::Process(float *samples, uint32_t size) {
         case 48000: {
             coeffsArr = &this->coeffsArr48000;
             break;
-        }
-        default: {
-            VIPER_LOGD("ViPERDDC::Process() -> Invalid sampling rate: %d", this->samplingRate);
-            return;
         }
     }
 
@@ -101,7 +98,7 @@ void ViPERDDC::Reset() {
     memset(this->x1R.data(), 0, this->arrSize * sizeof(float));
 }
 
-void ViPERDDC::SetCoeffs(uint32_t newCoeffsSize, float *newCoeffs44100, float *newCoeffs48000) {
+void ViPERDDC::SetCoeffs(uint32_t newCoeffsSize, const float *newCoeffs44100, const float *newCoeffs48000) {
     ReleaseResources();
 
     if (newCoeffsSize == 0) return;
@@ -148,6 +145,13 @@ void ViPERDDC::SetEnable(bool enable) {
 void ViPERDDC::SetSamplingRate(uint32_t samplingRate) {
     if (this->samplingRate != samplingRate) {
         this->samplingRate = samplingRate;
+        if (!isSamplingRateValid()) {
+            VIPER_LOGE("ViPERDDC::SetSamplingRate() -> Invalid sampling rate: %d", this->samplingRate);
+        }
         Reset();
     }
+}
+
+bool ViPERDDC::isSamplingRateValid() const {
+    return this->samplingRate == 44100 || this->samplingRate == 48000;
 }
