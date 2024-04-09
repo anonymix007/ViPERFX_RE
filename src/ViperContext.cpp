@@ -559,22 +559,22 @@ int32_t ViperContext::handleSetParam(effect_param_t *pCmdParam, void *pReplyData
             return 0;
         }
         case PARAM_SET_DYNAMIC_SYSTEM_X_COEFFICIENTS: {
-            if (pCmdParam->vsize != sizeof(uint32_t) * 2) {
-                VIPER_LOGE("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_X_COEFFICIENTS called with invalid vsize = %d, expected vsize = %zu", pCmdParam->vsize, sizeof(uint32_t) * 2);
+            if (pCmdParam->vsize != sizeof(uint16_t) * 2) {
+                VIPER_LOGE("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_X_COEFFICIENTS called with invalid vsize = %d, expected vsize = %zu", pCmdParam->vsize, sizeof(uint16_t) * 2);
                 return -EINVAL;
             }
-            uint32_t low = *(uint32_t *) (pCmdParam->data + vOffset);
-            uint32_t high = *(uint32_t *) (pCmdParam->data + vOffset + sizeof(uint32_t));
+            uint16_t low = *(uint16_t *) (pCmdParam->data + vOffset);
+            uint16_t high = *(uint16_t *) (pCmdParam->data + vOffset + sizeof(uint16_t));
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_X_COEFFICIENTS called with low = %d, high = %d", low, high);
             viper.dynamicSystem.SetXCoeffs(low, high);
         }
         case PARAM_SET_DYNAMIC_SYSTEM_Y_COEFFICIENTS: {
-            if (pCmdParam->vsize != sizeof(uint32_t) * 2) {
-                VIPER_LOGE("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_Y_COEFFICIENTS called with invalid vsize = %d, expected vsize = %zu", pCmdParam->vsize, sizeof(uint32_t) * 2);
+            if (pCmdParam->vsize != sizeof(uint16_t) * 2) {
+                VIPER_LOGE("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_Y_COEFFICIENTS called with invalid vsize = %d, expected vsize = %zu", pCmdParam->vsize, sizeof(uint16_t) * 2);
                 return -EINVAL;
             }
-            uint32_t low = *(uint32_t *) (pCmdParam->data + vOffset);
-            uint32_t high = *(uint32_t *) (pCmdParam->data + vOffset + sizeof(uint32_t));
+            uint16_t low = *(uint16_t *) (pCmdParam->data + vOffset);
+            uint16_t high = *(uint16_t *) (pCmdParam->data + vOffset + sizeof(uint16_t));
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_Y_COEFFICIENTS called with low = %d, high = %d", low, high);
             viper.dynamicSystem.SetYCoeffs(low, high);
         }
@@ -589,11 +589,11 @@ int32_t ViperContext::handleSetParam(effect_param_t *pCmdParam, void *pReplyData
             viper.dynamicSystem.SetSideGain(static_cast<float>(gainX) / 100.0f, static_cast<float>(gainY) / 100.0f);
         }
         case PARAM_SET_DYNAMIC_SYSTEM_STRENGTH: {
-            if (pCmdParam->vsize != sizeof(uint8_t)) {
-                VIPER_LOGE("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_STRENGTH called with invalid vsize = %d, expected vsize = %zu", pCmdParam->vsize, sizeof(uint8_t));
+            if (pCmdParam->vsize != sizeof(uint16_t)) {
+                VIPER_LOGE("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_STRENGTH called with invalid vsize = %d, expected vsize = %zu", pCmdParam->vsize, sizeof(uint16_t));
                 return -EINVAL;
             }
-            uint8_t strength = *(uint8_t *) (pCmdParam->data + vOffset);
+            uint16_t strength = *(uint16_t *) (pCmdParam->data + vOffset);
             VIPER_LOGD("handleSetParam: PARAM_SET_DYNAMIC_SYSTEM_STRENGTH called with strength = %d", strength);
             viper.dynamicSystem.SetBassGain(static_cast<float>(strength) / 100.0f);
         }
