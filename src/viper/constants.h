@@ -8,6 +8,10 @@
 
 #include "../log.h" // TODO: Remove this dependency
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 #if defined(__arm__)
 #define VIPER_ARCHITECTURE "ARM"
 #elif defined(__aarch64__)
@@ -16,6 +20,8 @@
 #define VIPER_ARCHITECTURE "x86"
 #elif defined(__x86_64__)
 #define VIPER_ARCHITECTURE "x86_64"
+#elif defined(__hexagon__)
+#define VIPER_ARCHITECTURE "HexagonDSP"
 #else
 #error "Unknown architecture"
 // Note from the developer:
